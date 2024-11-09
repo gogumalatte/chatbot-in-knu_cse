@@ -16,28 +16,12 @@ export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
     }
   }, [messages]);
 
-  // 홀수 인덱스(사용자 질문)와 짝수 인덱스(AI 답변)를 페어로 묶기
-  const pairedMessages = [];
-  for (let i = 0; i < messages.length; i += 2) {
-    pairedMessages.push({
-      userMessage: messages[i],
-      aiResponse: messages[i + 1] || "",
-    });
-  }
-
   return (
     <MessageListContainer ref={messageListRef}>
-      {pairedMessages.map((pair, index) => (
-        <div key={index}>
-          <MessageBox isAIResponse={false}>
-            <Text>{pair.userMessage}</Text>
-          </MessageBox>
-          {pair.aiResponse && (
-            <MessageBox isAIResponse={true}>
-              <Text>{pair.aiResponse}</Text>
-            </MessageBox>
-          )}
-        </div>
+      {messages.map((message, index) => (
+        <MessageBox key={index}>
+          <Text>{message}</Text>
+        </MessageBox>
       ))}
     </MessageListContainer>
   );
@@ -48,7 +32,7 @@ const MessageListContainer = styled(Box)`
   width: 90%; // 메시지 입력창과 동일한 너비 설정
   max-width: 800px; // 입력창의 최대 너비와 맞춤
   display: flex;
-  flex-direction: column; // 순서대로 메시지가 쌓임
+  flex-direction: column-reverse; // 아래에서부터 메시지가 쌓임
   min-height: 60vh; // 화면의 60% 높이를 최소 높이로 설정하여 스크롤 공간 확보
   overflow: visible; // 메시지 리스트 자체의 스크롤 비활성화
   padding: 10px;
@@ -56,18 +40,12 @@ const MessageListContainer = styled(Box)`
 `;
 
 // 메시지 박스 스타일 (동적 길이, 우측 정렬)
-interface MessageBoxProps {
-  isAIResponse: boolean;
-}
-
-const MessageBox = styled(Box)<MessageBoxProps>`
+const MessageBox = styled(Box)`
   margin: 5px 0;
   padding: 10px;
-  background-color: ${({ isAIResponse }) =>
-    isAIResponse ? "#FFDFB8" : "#f0f0f0"};
+  background-color: #f0f0f0;
   border-radius: 8px;
   max-width: 80%; // 메시지 박스의 최대 너비 설정 (화면의 80%)
-  align-self: ${({ isAIResponse }) =>
-    isAIResponse ? "flex-start" : "flex-end"};
+  align-self: flex-end; // 우측 정렬
   word-wrap: break-word; // 긴 텍스트가 박스를 넘지 않도록 자동 줄바꿈
 `;
