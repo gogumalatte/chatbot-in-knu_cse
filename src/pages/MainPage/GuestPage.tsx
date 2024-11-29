@@ -1,3 +1,4 @@
+// 로그인 하지 않은 사용자의 메인 페이지 컴포넌트
 import { useState, useEffect, useRef } from "react";
 import { MessageInput } from "./MessageInput/MessageInput";
 import { MessageList } from "./messageList/MessageList";
@@ -10,7 +11,7 @@ import tutorial3 from "@/assets/tutorial3.svg";
 import tutorial4 from "@/assets/tutorial4.svg";
 import tutorial5 from "@/assets/tutorial5.svg";
 
-const MainPage = () => {
+const GuestPage = () => {
   const [messages, setMessages] = useState<string[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -208,6 +209,12 @@ const MainPage = () => {
                     height: "1px",
                     borderBottom: "2px dashed #555",
                   }}
+                  _hover={{
+                    color: "#7E2B24", // 텍스트 색상 변경
+                    _after: {
+                      borderBottomColor: "#7E2B24", // 밑줄 색상 변경
+                    },
+                  }}
                 >
                   챗봇 더 알아보기
                 </Text>
@@ -324,4 +331,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default GuestPage;
